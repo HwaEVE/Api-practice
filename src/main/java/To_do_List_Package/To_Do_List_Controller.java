@@ -28,12 +28,6 @@ public class To_Do_List_Controller {
         return createdTodo.toResponseDTO();
     }
 
-//    @GetMapping("/todos/{id}")
-//    public To_Do_List_ResponseDTO getTodoById(@PathVariable Long id) {
-//        To_Do_List_Entity entity = toDoListService.findTodoById(id);
-//        return entity.toResponseDTO();
-//    }
-
     // 새로운 엔드포인트 추가
     @GetMapping("/todos")
     public ResponseEntity<List<To_Do_List_ResponseDTO>> getAllTodos() {
@@ -63,6 +57,13 @@ public class To_Do_List_Controller {
                 .toList();
         return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
+    // 그룹 이름 검색을 위한 GET 엔드포인트 추가
+    @GetMapping("/groups/search")
+    public ResponseEntity<List<To_Do_List_Group_Entity>> searchGroups(@RequestParam String name) {
+        List<To_Do_List_Group_Entity> searchResults = toDoListService.searchGroupsByName(name);
+        return new ResponseEntity<>(searchResults, HttpStatus.OK);
+    }
+
     @PostMapping("/groups")
     public ResponseEntity<To_Do_List_Group_Entity> createGroup(@RequestBody To_Do_List_Group_Entity group) {
         To_Do_List_Group_Entity createdGroup = toDoListService.createListGroup(group);

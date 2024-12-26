@@ -46,4 +46,8 @@ public class To_Do_List_Service {
     public List<To_Do_List_Entity> getAllTodosByGroupId(Long groupId) {
         return repository.findAllByGroupId(groupId);
     }
+    // 그룹 검색 기능 추가
+    public List<To_Do_List_Group_Entity> searchGroupsByName(String name) {
+        return groupRepository.findByNameContaining(name);
+    }
 }
