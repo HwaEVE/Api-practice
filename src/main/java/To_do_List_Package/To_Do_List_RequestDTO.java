@@ -12,10 +12,21 @@ public class To_Do_List_RequestDTO {
     @NotNull(message = "Completion status is required")
     private Boolean completed;
 
-    public To_Do_List_RequestDTO(String title, String description, Boolean completed) {
+    private Long groupId;
+
+    public To_Do_List_RequestDTO(String title, String description, Boolean completed, Long groupId) {
         this.title = title;
         this.description = description;
         this.completed = completed;
+        this.groupId = groupId;
+    }
+
+    public Long getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
     }
 
     public @NotNull(message = "Title is required") String getTitle() {
@@ -47,11 +58,11 @@ public class To_Do_List_RequestDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         To_Do_List_RequestDTO that = (To_Do_List_RequestDTO) o;
-        return Objects.equals(title, that.title) && Objects.equals(description, that.description) && Objects.equals(completed, that.completed);
+        return Objects.equals(title, that.title) && Objects.equals(description, that.description) && Objects.equals(completed, that.completed) && Objects.equals(groupId, that.groupId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, description, completed);
+        return Objects.hash(title, description, completed, groupId);
     }
 }

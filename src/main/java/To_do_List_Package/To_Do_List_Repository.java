@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface To_Do_List_Repository extends JpaRepository<To_Do_List_Entity, Long> {
     List<To_Do_List_Entity> findByTitleContaining(String title);
+    List<To_Do_List_Entity> findAllByGroupId(Long groupId);
+
 }

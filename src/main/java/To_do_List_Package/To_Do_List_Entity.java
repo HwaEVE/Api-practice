@@ -30,12 +30,17 @@ public class To_Do_List_Entity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private To_Do_List_Group_Entity group;
+
     public To_Do_List_Entity() {}
 
-    public To_Do_List_Entity(String title, String description, Boolean completed) {
+    public To_Do_List_Entity(String title, String description, Boolean completed, To_Do_List_Group_Entity group) {
         this.title = title;
         this.description = description;
         this.completed = completed;
+        this.group = group;
     }
 
     public Long getId() {
@@ -86,6 +91,14 @@ public class To_Do_List_Entity {
         this.updatedAt = updatedAt;
     }
 
+    public To_Do_List_Group_Entity getGroup() {
+        return group;
+    }
+
+    public void setGroup(To_Do_List_Group_Entity group) {
+        this.group = group;
+    }
+
     public To_Do_List_ResponseDTO toResponseDTO() {
         return new To_Do_List_ResponseDTO(
                 this.id,
@@ -97,16 +110,17 @@ public class To_Do_List_Entity {
         );
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         To_Do_List_Entity that = (To_Do_List_Entity) o;
-        return Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(description, that.description) && Objects.equals(completed, that.completed) && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt);
+        return Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(description, that.description) && Objects.equals(completed, that.completed) && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt) && Objects.equals(group, that.group);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, completed, createdAt, updatedAt);
+        return Objects.hash(id, title, description, completed, createdAt, updatedAt, group);
     }
 }
