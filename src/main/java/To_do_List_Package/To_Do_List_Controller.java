@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class To_Do_List_Controller {
@@ -31,7 +32,6 @@ public class To_Do_List_Controller {
         return entity.toResponseDTO();
     }
 
-    // 새로운 엔드포인트 추가
     @GetMapping("/todos")
     public ResponseEntity<List<To_Do_List_ResponseDTO>> getAllTodos() {
         List<To_Do_List_Entity> allTodos = toDoListService.getAllTodos();
@@ -40,16 +40,27 @@ public class To_Do_List_Controller {
                 .toList();
         return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
-
+    // 할 일 검색을 위한 GET 엔드포인트 추가
+    @GetMapping("/todos/search")
+    public ResponseEntity<List<To_Do_List_ResponseDTO>> searchTodos(@RequestParam String title) {
+        List<To_Do_List_Entity> searchResults = toDoListService.searchTodosByTitle(title);
+        List<To_Do_List_ResponseDTO> responseList = searchResults.stream()
+                .map(To_Do_List_Entity::toResponseDTO)
+                .toList();
+        return new ResponseEntity<>(responseList, HttpStatus.OK);
+    }
 
     @PutMapping("/todos/{id}")
-    public To_Do_List_ResponseDTO updateTodo(@PathVariable Long id, @Valid @RequestBody To_Do_List_RequestDTO requestDTO) {
+    public To_Do_List_ResponseDTO updateTodo(@PathVariable Long id, @RequestBody Map<String, Boolean> requestBody) {
         To_Do_List_Entity todo = toDoListService.findTodoById(id);
-        todo.setTitle(requestDTO.getTitle());
-        todo.setDescription(requestDTO.getDescription());
-        todo.setCompleted(requestDTO.getCompleted());
-        To_Do_List_Entity updatedTodo = toDoListService.updateTodo(todo);
-        return updatedTodo.toResponseDTO();
+        Boolean completed = requestBody.get("completed");
+        if (completed != null) {
+            todo.setCompleted(completed);
+            To_Do_List_Entity updatedTodo = toDoListService.updateTodo(todo);
+            return updatedTodo.toResponseDTO();
+        } else {
+            throw new IllegalArgumentException("completed 필드는 필수입니다.");
+        }
     }
 
     @DeleteMapping("/todos/{id}")

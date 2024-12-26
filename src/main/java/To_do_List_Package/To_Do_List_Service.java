@@ -27,8 +27,11 @@ public class To_Do_List_Service {
         repository.deleteById(id);
     }
 
-    // 새로운 메소드 추가
     public List<To_Do_List_Entity> getAllTodos() {
         return repository.findAll();
+    }
+    // 검색 기능 추가
+    public List<To_Do_List_Entity> searchTodosByTitle(String title) {
+        return repository.findByTitleContaining(title);
     }
 }
