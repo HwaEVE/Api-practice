@@ -1,9 +1,7 @@
 package To_do_List_Package;
 
 import jakarta.validation.constraints.NotNull;
-
 import java.util.Objects;
-
 public class To_Do_List_RequestDTO {
 
     @NotNull(message = "Title is required")

@@ -1,10 +1,10 @@
 package To_do_List_Package;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -22,20 +22,20 @@ public class To_Do_List_Entity {
     @Column(nullable = false)
     private Boolean completed;
 
-    @Column(name = "created_at", nullable = false)
-    private String createdAt;
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
-    private String updatedAt;
+    private LocalDateTime updatedAt;
 
     public To_Do_List_Entity() {}
 
-    public To_Do_List_Entity(String title, String description, Boolean completed, String createdAt, String updatedAt) {
+    public To_Do_List_Entity(String title, String description, Boolean completed) {
         this.title = title;
         this.description = description;
         this.completed = completed;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -70,20 +70,31 @@ public class To_Do_List_Entity {
         this.completed = completed;
     }
 
-    public String getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public To_Do_List_ResponseDTO toResponseDTO() {
+        return new To_Do_List_ResponseDTO(
+                this.id,
+                this.title,
+                this.description,
+                this.completed,
+                this.createdAt.toString(),
+                this.updatedAt != null ? this.updatedAt.toString() : null
+        );
     }
 
     @Override
