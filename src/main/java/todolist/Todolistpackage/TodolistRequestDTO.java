@@ -25,10 +25,6 @@ public class TodolistRequestDTO {
         return groupId;
     }
 
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
-    }
-
     public @NotNull(message = "Title is required") String getTitle() {
         return title;
     }
@@ -41,16 +37,8 @@ public class TodolistRequestDTO {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public @NotNull(message = "Completion status is required") Boolean getCompleted() {
         return completed;
-    }
-
-    public void setCompleted(@NotNull(message = "Completion status is required") Boolean completed) {
-        this.completed = completed;
     }
 
     @Override

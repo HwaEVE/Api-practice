@@ -34,40 +34,20 @@ public class TodolistResponseDTO {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Boolean getCompleted() {
         return completed;
     }
 
-    public void setCompleted(Boolean completed) {
-        this.completed = completed;
-    }
-
     public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public String getUpdatedAt() {
         return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     @Override

@@ -45,7 +45,7 @@ public class TodolistController {
 
     // 5. 특정 완료 상태의 할 일 목록 조회 (/todos/completed)
     @GetMapping("/todos/completed")
-    public ResponseEntity<List<TodolistResponseDTO>> getTodosByCompleted(@RequestParam boolean completed) {
+    public ResponseEntity<List<TodolistResponseDTO>> getTodosByCompleted(@RequestParam(required = false) boolean completed) {
         List<TodolistResponseDTO> responseList = todolistService.getTodosByCompleted(completed);
         return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
