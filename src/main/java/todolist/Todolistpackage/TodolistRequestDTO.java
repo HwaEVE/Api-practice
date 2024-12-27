@@ -1,4 +1,4 @@
-package Todolistpackage;
+package todolist.Todolistpackage;
 
 import jakarta.validation.constraints.NotNull;
 import java.util.Objects;

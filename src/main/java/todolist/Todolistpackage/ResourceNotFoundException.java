@@ -1,4 +1,4 @@
-package Todolistpackage;
+package todolist.Todolistpackage;
 
 public class ResourceNotFoundException extends RuntimeException {
 

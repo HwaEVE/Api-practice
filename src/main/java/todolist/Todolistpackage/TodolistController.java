@@ -1,4 +1,4 @@
-package Todolistpackage;
+package todolist.Todolistpackage;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

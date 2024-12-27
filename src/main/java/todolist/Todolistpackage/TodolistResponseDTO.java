@@ -1,4 +1,4 @@
-package Todolistpackage;
+package todolist.Todolistpackage;
 
 import java.util.Objects;
 
@@ -10,6 +10,8 @@ public class TodolistResponseDTO {
     private Boolean completed;
     private String createdAt;
     private String updatedAt;
+
+    public TodolistResponseDTO() {}
 
     public TodolistResponseDTO(Long id, String title, String description, Boolean completed, String createdAt, String updatedAt) {
         this.id = id;

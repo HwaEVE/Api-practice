@@ -1,9 +1,9 @@
-package Todolistpackage;
+package todolist.Todolistpackage;
 
-import Todolistgrouppackage.TodolistGroupEntity;
+import todolist.Todolistgrouppackage.TodolistGroupEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import Todolistgrouppackage.TodolistGroupService;
+import todolist.Todolistgrouppackage.TodolistGroupService;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
