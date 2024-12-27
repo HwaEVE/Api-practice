@@ -1,14 +1,15 @@
-package To_do_List_Package;
+package Todolistgrouppackage;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class To_Do_List_Group_Entity {
+public class TodolistGroupEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +27,11 @@ public class To_Do_List_Group_Entity {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<To_Do_List_Entity> todos;
-    public To_Do_List_Group_Entity() {
+    private List<Todolistpackage.TodolistEntity> todos;
+    public TodolistGroupEntity() {
     }
 
-    public To_Do_List_Group_Entity(String name) {
+    public TodolistGroupEntity(String name) {
         this.name = name;
     }
 
@@ -66,11 +67,11 @@ public class To_Do_List_Group_Entity {
         this.updatedAt = updatedAt;
     }
 
-    public List<To_Do_List_Entity> getTodos() {
+    public List<Todolistpackage.TodolistEntity> getTodos() {
         return todos;
     }
 
-    public void setTodos(List<To_Do_List_Entity> todos) {
+    public void setTodos(List<Todolistpackage.TodolistEntity> todos) {
         this.todos = todos;
     }
 
@@ -78,7 +79,7 @@ public class To_Do_List_Group_Entity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        To_Do_List_Group_Entity that = (To_Do_List_Group_Entity) o;
+        TodolistGroupEntity that = (TodolistGroupEntity) o;
         return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt) && Objects.equals(todos, that.todos);
     }
 
