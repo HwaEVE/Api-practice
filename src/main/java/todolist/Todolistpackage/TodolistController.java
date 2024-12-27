@@ -62,4 +62,13 @@ public class TodolistController {
         todolistService.deleteTodoById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    // 할 일이 속한 리스트를 다른 리스트로 변경
+    @PutMapping("/todos/{id}/group/{newGroupId}")
+    public ResponseEntity<TodolistEntity> changeTodoGroup(
+            @PathVariable Long id,
+            @PathVariable Long newGroupId) {
+        TodolistEntity updatedTodo = todolistService.updateListOfTodo(id, newGroupId);
+        return new ResponseEntity<>(updatedTodo, HttpStatus.OK);
+    }
 }

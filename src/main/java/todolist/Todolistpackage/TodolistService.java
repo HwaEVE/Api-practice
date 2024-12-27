@@ -1,8 +1,10 @@
 package todolist.Todolistpackage;
 
+import jakarta.persistence.EntityNotFoundException;
 import todolist.Todolistgrouppackage.TodolistGroupEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import todolist.Todolistgrouppackage.TodolistGroupRepository;
 import todolist.Todolistgrouppackage.TodolistGroupService;
 
 import java.time.LocalDateTime;
@@ -17,6 +19,10 @@ public class TodolistService {
     private TodolistRepository repository;
     @Autowired
     private TodolistGroupService groupService;
+    @Autowired
+    private TodolistRepository todolistRepository;
+    @Autowired
+    private TodolistGroupRepository groupRepository;
 
     public TodolistEntity createTodo(TodolistRequestDTO requestDTO) {
         TodolistGroupEntity group = groupService.findListGroupById(requestDTO.getGroupId());
@@ -81,5 +87,15 @@ public class TodolistService {
         return todos.stream()
                 .map(TodolistEntity::toResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    // 할 일이 속한 리스트를 다른 리스트로 변경하는 서비스
+    public TodolistEntity updateListOfTodo(Long todoId, Long newListId) {
+        TodolistEntity todo = todolistRepository.findById(todoId)
+                .orElseThrow(() -> new EntityNotFoundException("Todo not found"));
+        TodolistGroupEntity newGroup = groupRepository.findById(newListId)
+                .orElseThrow(() -> new EntityNotFoundException("Group not found"));
+        todo.setGroup(newGroup);
+        return todolistRepository.save(todo);
     }
 }
