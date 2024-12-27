@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Map;
 
@@ -51,7 +52,9 @@ public class TodolistController {
     }
 
     @PutMapping("/todos/{id}")
-    public TodolistResponseDTO updateTodo(@PathVariable Long id, @RequestBody Map<String, Boolean> requestBody) {
+    public TodolistResponseDTO updateTodo(
+            @PathVariable Long id,
+            @RequestBody Map<String, Boolean> requestBody) {
         Boolean completed = requestBody.get("completed");
         TodolistEntity updatedTodo = todolistService.updateTodo(id, completed);
         return updatedTodo.toResponseDTO();

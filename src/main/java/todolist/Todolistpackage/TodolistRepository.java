@@ -14,4 +14,5 @@ public interface TodolistRepository extends JpaRepository<TodolistEntity, Long> 
 
     @Query("SELECT t FROM TodolistEntity t WHERE t.createdAt >= :startOfDay AND t.createdAt < :endOfDay")
     List<TodolistEntity> findTodosCreatedToday(@Param("startOfDay") LocalDateTime startOfDay, @Param("endOfDay") LocalDateTime endOfDay);
+
 }
