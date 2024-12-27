@@ -17,6 +17,7 @@ public class TodolistController {
     private TodolistService todolistService;
     @Autowired
     private TodolistGroupService groupService;
+
     @PostMapping("/todos")
     public TodolistResponseDTO createTodo(@Valid @RequestBody TodolistRequestDTO requestDTO) {
         TodolistGroupEntity group = groupService.findListGroupById(requestDTO.getGroupId());
@@ -54,6 +55,25 @@ public class TodolistController {
     public ResponseEntity<List<TodolistResponseDTO>> searchTodos(@RequestParam String title) {
         List<TodolistEntity> searchResults = todolistService.searchTodosByTitle(title);
         List<TodolistResponseDTO> responseList = searchResults.stream()
+                .map(TodolistEntity::toResponseDTO)
+                .toList();
+        return new ResponseEntity<>(responseList, HttpStatus.OK);
+    }
+    // 완료/미완료 할 일 필터링
+    @GetMapping("/todos/completed")
+    public ResponseEntity<List<TodolistResponseDTO>> getTodosByCompleted(@RequestParam boolean completed) {
+        List<TodolistEntity> todos = todolistService.getTodosByCompleted(completed);
+        List<TodolistResponseDTO> responseList = todos.stream()
+                .map(TodolistEntity::toResponseDTO)
+                .toList();
+        return new ResponseEntity<>(responseList, HttpStatus.OK);
+    }
+
+    // 오늘 할 일 필터링
+    @GetMapping("/todos/today")
+    public ResponseEntity<List<TodolistResponseDTO>> getTodosCreatedToday() {
+        List<TodolistEntity> todos = todolistService.getTodosCreatedToday();
+        List<TodolistResponseDTO> responseList = todos.stream()
                 .map(TodolistEntity::toResponseDTO)
                 .toList();
         return new ResponseEntity<>(responseList, HttpStatus.OK);

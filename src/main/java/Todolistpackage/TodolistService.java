@@ -3,6 +3,9 @@ package Todolistpackage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import Todolistgrouppackage.TodolistGroupService;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -37,5 +40,15 @@ public class TodolistService {
     }
     public List<TodolistEntity> getAllTodosByGroupId(Long groupId) {
         return repository.findAllByGroupId(groupId);
+    }
+
+    public List<TodolistEntity> getTodosByCompleted(boolean completed) {
+        return repository.findByCompleted(completed);
+    }
+
+    public List<TodolistEntity> getTodosCreatedToday() {
+        LocalDateTime startOfDay = LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.MIN);
+        LocalDateTime endOfDay = LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.MAX);
+        return repository.findTodosCreatedToday(startOfDay, endOfDay);
     }
 }
