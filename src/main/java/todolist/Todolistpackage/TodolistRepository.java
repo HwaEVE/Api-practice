@@ -11,6 +11,7 @@ public interface TodolistRepository extends JpaRepository<TodolistEntity, Long> 
     List<TodolistEntity> findByTitleContaining(String title);
     List<TodolistEntity> findAllByGroupId(Long groupId);
     List<TodolistEntity> findByCompleted(boolean completed);
+    List<TodolistEntity> findByListId(Long listId);
 
     @Query("SELECT t FROM TodolistEntity t WHERE t.createdAt >= :startOfDay AND t.createdAt < :endOfDay")
     List<TodolistEntity> findTodosCreatedToday(@Param("startOfDay") LocalDateTime startOfDay, @Param("endOfDay") LocalDateTime endOfDay);

@@ -15,49 +15,49 @@ public class TodolistController {
     @Autowired
     private TodolistService todolistService;
 
-    //할 일 생성 (/todos)
+    // 1. 할 일 생성 (/todos)
     @PostMapping("/todos")
     public TodolistResponseDTO createTodo(@Valid @RequestBody TodolistRequestDTO requestDTO) {
         TodolistEntity createdTodo = todolistService.createTodo(requestDTO);
         return createdTodo.toResponseDTO();
     }
 
-    //전체 할 일 목록 조회 (/todos)
+    // 2. 전체 할 일 목록 조회 또는 특정 리스트의 할 일 목록 조회 (/todos)
     @GetMapping("/todos")
-    public ResponseEntity<List<TodolistResponseDTO>> getAllTodos() {
-        List<TodolistResponseDTO> responseList = todolistService.getAllTodos();
+    public ResponseEntity<List<TodolistResponseDTO>> getTodos(@RequestParam(required = false) Long listId) {
+        List<TodolistResponseDTO> responseList = todolistService.getTodosByListIdOrAll(listId); // listId에 따른 처리 서비스 호출
         return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
 
-    //특정 그룹에 속한 할 일 목록 조회 (/todos/groups/{groupId})
+    // 3. 특정 그룹에 속한 할 일 목록 조회 (/todos/groups/{groupId})
     @GetMapping("/todos/groups/{groupId}")
     public ResponseEntity<List<TodolistResponseDTO>> getAllTodosByGroupId(@PathVariable Long groupId) {
         List<TodolistResponseDTO> responseList = todolistService.getAllTodosByGroupId(groupId);
         return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
 
-    // 특정 리스트 검색 기능
+    // 4. 특정 리스트 검색 기능
     @GetMapping("/todos/search")
     public ResponseEntity<List<TodolistResponseDTO>> searchTodos(@RequestParam String title) {
         List<TodolistResponseDTO> responseList = todolistService.searchTodosByTitle(title);
         return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
 
-    // 특정 완료 상태의 할 일 목록 조회
+    // 5. 특정 완료 상태의 할 일 목록 조회 (/todos/completed)
     @GetMapping("/todos/completed")
     public ResponseEntity<List<TodolistResponseDTO>> getTodosByCompleted(@RequestParam boolean completed) {
         List<TodolistResponseDTO> responseList = todolistService.getTodosByCompleted(completed);
         return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
 
-    //오늘 생성된 할 일 목록 조회 (/todos/today)
+    // 6. 오늘 생성된 할 일 목록 조회 (/todos/today)
     @GetMapping("/todos/today")
     public ResponseEntity<List<TodolistResponseDTO>> getTodosCreatedToday() {
         List<TodolistResponseDTO> responseList = todolistService.getTodosCreatedToday();
         return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
 
-    //할 일 업데이트 (/todos/{id})
+    // 7. 할 일 업데이트 (/todos/{id})
     @PutMapping("/todos/{id}")
     public TodolistResponseDTO updateTodo(
             @PathVariable Long id,
@@ -67,14 +67,14 @@ public class TodolistController {
         return updatedTodo.toResponseDTO();
     }
 
-    //할 일 삭제 (/todos/{id})
+    // 8. 할 일 삭제 (/todos/{id})
     @DeleteMapping("/todos/{id}")
     public ResponseEntity<Void> deleteTodoById(@PathVariable Long id) {
         todolistService.deleteTodoById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    // 할 일이 속한 리스트를 다른 리스트로 변경
+    // 9. 할 일이 속한 리스트를 다른 리스트로 변경 (/todos/{id}/group/{newGroupId})
     @PutMapping("/todos/{id}/group/{newGroupId}")
     public ResponseEntity<TodolistEntity> changeTodoGroup(
             @PathVariable Long id,
