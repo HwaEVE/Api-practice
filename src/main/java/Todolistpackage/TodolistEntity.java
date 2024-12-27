@@ -1,14 +1,14 @@
-package To_do_List_Package;
+package Todolistpackage;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
+import Todolistgrouppackage.TodolistGroupEntity;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-public class To_Do_List_Entity {
+public class TodolistEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,11 +32,11 @@ public class To_Do_List_Entity {
 
     @ManyToOne
     @JoinColumn(name = "group_id")
-    private To_Do_List_Group_Entity group;
+    private TodolistGroupEntity group;
 
-    public To_Do_List_Entity() {}
+    public TodolistEntity() {}
 
-    public To_Do_List_Entity(String title, String description, Boolean completed, To_Do_List_Group_Entity group) {
+    public TodolistEntity(String title, String description, Boolean completed, TodolistGroupEntity group) {
         this.title = title;
         this.description = description;
         this.completed = completed;
@@ -91,16 +91,16 @@ public class To_Do_List_Entity {
         this.updatedAt = updatedAt;
     }
 
-    public To_Do_List_Group_Entity getGroup() {
+    public TodolistGroupEntity getGroup() {
         return group;
     }
 
-    public void setGroup(To_Do_List_Group_Entity group) {
+    public void setGroup(TodolistGroupEntity group) {
         this.group = group;
     }
 
-    public To_Do_List_ResponseDTO toResponseDTO() {
-        return new To_Do_List_ResponseDTO(
+    public TodolistResponseDTO toResponseDTO() {
+        return new TodolistResponseDTO(
                 this.id,
                 this.title,
                 this.description,
@@ -110,12 +110,11 @@ public class To_Do_List_Entity {
         );
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        To_Do_List_Entity that = (To_Do_List_Entity) o;
+        TodolistEntity that = (TodolistEntity) o;
         return Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(description, that.description) && Objects.equals(completed, that.completed) && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt) && Objects.equals(group, that.group);
     }
 

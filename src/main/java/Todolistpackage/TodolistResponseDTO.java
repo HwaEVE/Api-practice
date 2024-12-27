@@ -1,8 +1,8 @@
-package To_do_List_Package;
+package Todolistpackage;
 
 import java.util.Objects;
 
-public class To_Do_List_ResponseDTO {
+public class TodolistResponseDTO {
 
     private Long id;
     private String title;
@@ -11,7 +11,7 @@ public class To_Do_List_ResponseDTO {
     private String createdAt;
     private String updatedAt;
 
-    public To_Do_List_ResponseDTO(Long id, String title, String description, Boolean completed, String createdAt, String updatedAt) {
+    public TodolistResponseDTO(Long id, String title, String description, Boolean completed, String createdAt, String updatedAt) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -72,7 +72,7 @@ public class To_Do_List_ResponseDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        To_Do_List_ResponseDTO that = (To_Do_List_ResponseDTO) o;
+        TodolistResponseDTO that = (TodolistResponseDTO) o;
         return Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(description, that.description) && Objects.equals(completed, that.completed) && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt);
     }
 

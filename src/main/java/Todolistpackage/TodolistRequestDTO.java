@@ -1,8 +1,8 @@
-package To_do_List_Package;
+package Todolistpackage;
 
 import jakarta.validation.constraints.NotNull;
 import java.util.Objects;
-public class To_Do_List_RequestDTO {
+public class TodolistRequestDTO {
 
     @NotNull(message = "Title is required")
     private String title;
@@ -14,7 +14,7 @@ public class To_Do_List_RequestDTO {
 
     private Long groupId;
 
-    public To_Do_List_RequestDTO(String title, String description, Boolean completed, Long groupId) {
+    public TodolistRequestDTO(String title, String description, Boolean completed, Long groupId) {
         this.title = title;
         this.description = description;
         this.completed = completed;
@@ -57,7 +57,7 @@ public class To_Do_List_RequestDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        To_Do_List_RequestDTO that = (To_Do_List_RequestDTO) o;
+        TodolistRequestDTO that = (TodolistRequestDTO) o;
         return Objects.equals(title, that.title) && Objects.equals(description, that.description) && Objects.equals(completed, that.completed) && Objects.equals(groupId, that.groupId);
     }
 

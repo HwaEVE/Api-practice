@@ -1,4 +1,4 @@
-package To_do_List_Package;
+package Todolistpackage;
 
 public class ResourceNotFoundException extends RuntimeException {
 
