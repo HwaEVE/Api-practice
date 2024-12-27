@@ -1,4 +1,4 @@
-package Todolistgrouppackage;
+package todolist.Todolistgrouppackage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,11 +35,10 @@ public class TodolistGroupController {
         List<TodolistGroupEntity> searchResults = groupService.searchGroupsByName(name);
         return new ResponseEntity<>(searchResults, HttpStatus.OK);
     }
+
     @PutMapping("/groups/{id}")
     public ResponseEntity<TodolistGroupEntity> updateGroup(@PathVariable Long id, @RequestBody TodolistGroupEntity group) {
-        TodolistGroupEntity existingGroup = groupService.findListGroupById(id);
-        existingGroup.setName(group.getName());
-        TodolistGroupEntity updatedGroup = groupService.updateGroup(existingGroup);
+        TodolistGroupEntity updatedGroup = groupService.updateGroupById(id, group);
         return new ResponseEntity<>(updatedGroup, HttpStatus.OK);
     }
 

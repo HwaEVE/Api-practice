@@ -1,5 +1,6 @@
-package Todolistgrouppackage;
+package todolist.Todolistgrouppackage;
 
+import todolist.Todolistpackage.TodolistEntity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -27,7 +28,7 @@ public class TodolistGroupEntity {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Todolistpackage.TodolistEntity> todos;
+    private List<TodolistEntity> todos;
     public TodolistGroupEntity() {
     }
 
@@ -67,11 +68,11 @@ public class TodolistGroupEntity {
         this.updatedAt = updatedAt;
     }
 
-    public List<Todolistpackage.TodolistEntity> getTodos() {
+    public List<TodolistEntity> getTodos() {
         return todos;
     }
 
-    public void setTodos(List<Todolistpackage.TodolistEntity> todos) {
+    public void setTodos(List<TodolistEntity> todos) {
         this.todos = todos;
     }
 

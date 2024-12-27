@@ -1,4 +1,4 @@
-package Todolistgrouppackage;
+package todolist.Todolistgrouppackage;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
