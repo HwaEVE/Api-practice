@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class TodolistGroupController {
@@ -14,32 +15,67 @@ public class TodolistGroupController {
     private TodolistGroupService groupService;
 
     @PostMapping("/groups")
-    public ResponseEntity<TodolistGroupEntity> createGroup(@RequestBody TodolistGroupEntity group) {
-        TodolistGroupEntity createdGroup = groupService.createListGroup(group);
-        return new ResponseEntity<>(createdGroup, HttpStatus.CREATED);
+    public ResponseEntity<TodolistGroupResponseDTO> createGroup(@RequestBody TodolistGroupRequestDTO requestDTO) {
+        TodolistGroupEntity createdGroup = groupService.createListGroup(requestDTO);
+        TodolistGroupResponseDTO responseDTO = new TodolistGroupResponseDTO(
+                createdGroup.getId(),
+                createdGroup.getName(),
+                createdGroup.getCreatedAt(),
+                createdGroup.getUpdatedAt()
+        );
+        return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
+
     @GetMapping("/groups/{id}")
-    public ResponseEntity<TodolistGroupEntity> getGroupById(@PathVariable Long id) {
+    public ResponseEntity<TodolistGroupResponseDTO> getGroupById(@PathVariable Long id) {
         TodolistGroupEntity group = groupService.findListGroupById(id);
-        return new ResponseEntity<>(group, HttpStatus.OK);
+        TodolistGroupResponseDTO responseDTO = new TodolistGroupResponseDTO(
+                group.getId(),
+                group.getName(),
+                group.getCreatedAt(),
+                group.getUpdatedAt()
+        );
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     @GetMapping("/groups")
-    public ResponseEntity<List<TodolistGroupEntity>> getAllGroups() {
+    public ResponseEntity<List<TodolistGroupResponseDTO>> getAllGroups() {
         List<TodolistGroupEntity> groupList = groupService.getAllGroups();
-        return new ResponseEntity<>(groupList, HttpStatus.OK);
+        List<TodolistGroupResponseDTO> responseDTOList = groupList.stream()
+                .map(group -> new TodolistGroupResponseDTO(
+                        group.getId(),
+                        group.getName(),
+                        group.getCreatedAt(),
+                        group.getUpdatedAt()
+                ))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(responseDTOList, HttpStatus.OK);
     }
 
     @GetMapping("/groups/search")
-    public ResponseEntity<List<TodolistGroupEntity>> searchGroups(@RequestParam String name) {
+    public ResponseEntity<List<TodolistGroupResponseDTO>> searchGroups(@RequestParam String name) {
         List<TodolistGroupEntity> searchResults = groupService.searchGroupsByName(name);
-        return new ResponseEntity<>(searchResults, HttpStatus.OK);
+        List<TodolistGroupResponseDTO> responseDTOList = searchResults.stream()
+                .map(group -> new TodolistGroupResponseDTO(
+                        group.getId(),
+                        group.getName(),
+                        group.getCreatedAt(),
+                        group.getUpdatedAt()
+                ))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(responseDTOList, HttpStatus.OK);
     }
 
     @PutMapping("/groups/{id}")
-    public ResponseEntity<TodolistGroupEntity> updateGroup(@PathVariable Long id, @RequestBody TodolistGroupEntity group) {
-        TodolistGroupEntity updatedGroup = groupService.updateGroupById(id, group);
-        return new ResponseEntity<>(updatedGroup, HttpStatus.OK);
+    public ResponseEntity<TodolistGroupResponseDTO> updateGroup(@PathVariable Long id, @RequestBody TodolistGroupRequestDTO requestDTO) {
+        TodolistGroupEntity updatedGroup = groupService.updateGroupById(id, requestDTO);
+        TodolistGroupResponseDTO responseDTO = new TodolistGroupResponseDTO(
+                updatedGroup.getId(),
+                updatedGroup.getName(),
+                updatedGroup.getCreatedAt(),
+                updatedGroup.getUpdatedAt()
+        );
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/groups/{id}")
